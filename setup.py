@@ -32,7 +32,8 @@ setup(
     python_requires='>=3.7.2,<4',
     install_requires=[
         'blockchain-etl-common',
-        'web3>=5.29,<6'
+        'web3>=5.29,<6',
+        'click'
     ],
     entry_points={
         'console_scripts': [

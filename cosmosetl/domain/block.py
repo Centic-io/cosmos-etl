@@ -7,3 +7,4 @@ class CosmBlock:
         self.proposer = None
         self.num_txs = None
         self.time = None
+        self.timestamp=None

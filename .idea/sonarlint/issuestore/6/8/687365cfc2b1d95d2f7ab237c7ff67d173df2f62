@@ -1,0 +1,6 @@
+
+Cpython:S1172>",Remove the unused function parameter "name".(“è©
+qpython:S1186B"YAdd a nested comment explaining why this method is empty, or complete the implementation.(•áÙ‡
+vpython:S1186E"YAdd a nested comment explaining why this method is empty, or complete the implementation.(¼˜´èøÿÿÿÿ
+kpython:S3776H"TRefactor this function to reduce its Cognitive Complexity from 17 to the 15 allowed.(ã†ös
+qpython:S1542¡"SRename function "EncodeDecimal" to match the regular expression ^[a-z_][a-z0-9_]*$.(‰ó•øÿÿÿÿ

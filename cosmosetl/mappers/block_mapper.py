@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from cosmosetl.domain.block import CosmBlock
 from cosmosetl.utils import str_to_dec
 
@@ -11,16 +13,19 @@ class CosmBlockMapper:
         block.proposer = json_dict['block']['header'].get('proposer_address')
         block.num_txs = len(json_dict['block']['data'].get('txs', []))
         block.time = json_dict['block']['header'].get('time')
+        block.timestamp = block.time
+
         return block
     
     def block_to_dict(self, block):
         return {
             'type': 'block',
-            'height': block.height,
-            'hash': block.hash,
-            'last_block_hash': block.last_block_hash,
-            'data_hash': block.data_hash,
-            'proposer': block.proposer,
+            'number': block.height,
+            'hash': block.hash.lower(),
+            'last_block_hash': block.last_block_hash.lower(),
+            'data_hash': block.data_hash.lower(),
+            'proposer': block.proposer.lower(),
             'num_txs': block.num_txs,
-            'time': block.time,
+            'datetime': block.time,
+            'timestamp': datetime.strptime(block.time.split(".")[0]+"Z", "%Y-%m-%dT%H:%M:%SZ").timestamp()
         }

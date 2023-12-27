@@ -14,10 +14,13 @@ class CosmEventMapper:
         event.tx_hash = tx_hash
         return event
         
-    def event_to_dict(self, event):
+    def event_to_dict(self, event, transaction, index):
         return {
             "type": "event",
             "_type": event._type,
-            "attributes": event.attributes,
-            "tx_hash": event.tx_hash
+            "attributes": json.loads(event.attributes),
+            "tx_hash": event.tx_hash.lower(),
+            "block_number": transaction.height,
+            "transaction_hash": transaction.hash.lower(),
+            "log_index": index
         }

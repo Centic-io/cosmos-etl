@@ -32,14 +32,14 @@ class CosmTransactionMapper:
     def transaction_to_dict(self, transaction):
         return {
             "type": "transaction",
-            "hash": transaction.hash,
-            "height": transaction.height,
+            "hash": transaction.hash.lower(),
+            "block_number": transaction.height,
             "index": transaction.index,
             "code": transaction.code,
             "gas_used": transaction.gas_used,
             "gas_wanted": transaction.gas_wanted,
             "num_events": transaction.num_events,
-            "root_hash": transaction.root_hash,
+            "root_hash": transaction.root_hash.lower(),
             "tx": transaction.tx,
             "data": transaction.data,
             "raw_data": transaction.raw_data,

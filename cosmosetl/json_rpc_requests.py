@@ -23,6 +23,14 @@ def generate_tx_search_by_height_json_rpc(heights, page=1, per_page=MAX_PER_PAGE
     for idx, height in enumerate(heights):
         yield generate_json_rpc(
             method='tx_search',
-            params=["tx.height=%d" % height, True, str(page), str(per_page), "asc"],
+            params=["tx.height=%d" % height, True, str(page), str(per_page), "asc", True],
             request_id=idx
         )
+
+def generate_get_latest_block_json_rpc():
+    return {
+        'jsonrpc': '2.0',
+        'method': 'status',
+        'params': [],
+        'id': 0,
+    }

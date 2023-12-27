@@ -1,4 +1,7 @@
 from blockchainetl_common.logging_utils import logging_basic_config
+
+from cosmosetl.cli.stream import stream
+
 logging_basic_config()
 
 import click
@@ -20,3 +23,4 @@ cli.add_command(export_blocks, "export_blocks")
 cli.add_command(export_transactions_and_events, "export_transactions_and_events")
 cli.add_command(get_block_range_for_date, "get_block_range_for_date")
 cli.add_command(get_block_range_for_timestamps, "get_block_range_for_timestamps")
+cli.add_command(stream, "stream")
