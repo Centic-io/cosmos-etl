@@ -30,3 +30,4 @@ wheels/
 *.code-workspace
 .env
 .data
+.idea
