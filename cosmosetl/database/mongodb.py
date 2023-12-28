@@ -119,7 +119,7 @@ class MongodbItemExporter(object):
         operations = []
         for update_info in logs:
             if "_id" not in update_info:
-                update_info['_id'] = f"{update_info.get('block_number')}_{update_info.get('log_index')}"
+                update_info['_id'] = f"{update_info.get('block_number')}_{update_info.get('tx_index')}_{update_info.get('log_index')}"
             key = {'_id': update_info.get('_id')}
             set_operator = {"$set": update_info}
             upsert_one = UpdateOne(key, set_operator, upsert=True)

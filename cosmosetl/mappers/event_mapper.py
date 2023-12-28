@@ -22,5 +22,6 @@ class CosmEventMapper:
             "tx_hash": event.tx_hash.lower(),
             "block_number": transaction.height,
             "transaction_hash": transaction.hash.lower(),
-            "log_index": index
+            "log_index": index,
+            "tx_index": transaction.index
         }
