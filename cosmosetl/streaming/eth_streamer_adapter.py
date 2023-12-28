@@ -7,12 +7,12 @@ from web3 import Web3
 from web3.middleware import geth_poa_middleware
 
 from config import EntityType
-from database.contract_filter import ContractFilterMemoryStorage
-from jobs.export_blocks_job import ExportBlocksJob
-from jobs.export_transactions_job import ExportTransactionsJob
-from json_rpc_requests import generate_get_latest_block_json_rpc
-from streaming.eth_item_id_calculator import EthItemIdCalculator
-from streaming.eth_item_timestamp_calculator import EthItemTimestampCalculator
+from cosmosetl.database.contract_filter import ContractFilterMemoryStorage
+from cosmosetl.jobs.export_blocks_job import ExportBlocksJob
+from cosmosetl.jobs.export_transactions_job import ExportTransactionsJob
+from cosmosetl.json_rpc_requests import generate_get_latest_block_json_rpc
+from cosmosetl.streaming.eth_item_id_calculator import EthItemIdCalculator
+from cosmosetl.streaming.eth_item_timestamp_calculator import EthItemTimestampCalculator
 
 
 class EthStreamerAdapter:

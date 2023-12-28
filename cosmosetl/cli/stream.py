@@ -27,13 +27,13 @@ from attr.converters import to_bool
 from blockchainetl_common.streaming.streaming_utils import configure_logging, configure_signals
 from dotenv import load_dotenv
 import click
+from query_state_lib.base.providers.auto import get_provider_from_uri
 
 from config import EntityType, ItemExporterType
-from providers.auto import get_provider_from_uri
-from streaming.eth_streamer_adapter import EthStreamerAdapter
-from streaming.streamer import Streamer
-from streaming.streaming_exporter_creator import determine_item_exporter_type, create_streaming_exporter
-from thread_local_proxy import ThreadLocalProxy
+from cosmosetl.streaming.eth_streamer_adapter import EthStreamerAdapter
+from cosmosetl.streaming.streamer import Streamer
+from cosmosetl.streaming.streaming_exporter_creator import determine_item_exporter_type, create_streaming_exporter
+from cosmosetl.thread_local_proxy import ThreadLocalProxy
 
 load_dotenv()
 
@@ -82,7 +82,6 @@ def stream(last_synced_block_file, lag, provider_uri, output, db_prefix, add_wal
         output = os.getenv("OUTPUT_DATABASE")
     entity_types = parse_entity_types(entity_types)
     validate_entity_types(entity_types, output)
-    add_wallets = to_bool(add_wallets)
 
     # TODO: Implement fallback mechanism for provider uris instead of picking randomly
     provider_uri = pick_random_provider_uri(provider_uri)

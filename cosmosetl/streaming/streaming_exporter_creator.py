@@ -1,4 +1,4 @@
-from database.mongodb import MongodbItemExporter
+from cosmosetl.database.mongodb import MongodbItemExporter
 
 
 def create_streaming_exporter(output, collector_id, db_prefix=""):

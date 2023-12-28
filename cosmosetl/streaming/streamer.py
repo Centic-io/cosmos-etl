@@ -28,7 +28,7 @@ import time
 from cosmosetl.file_utils import smart_open
 from cosmosetl.streaming.streamer_adapter_stub import StreamerAdapterStub
 from cosmosetl.streaming.streaming_exporter_creator import create_streaming_exporter
-from logging_utils import write_monitor_logs
+from cosmosetl.logging_utils import write_monitor_logs
 
 
 class Streamer:
