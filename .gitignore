@@ -28,5 +28,5 @@ wheels/
 # vscode
 .vscode/
 *.code-workspace
-
+.env
 .data

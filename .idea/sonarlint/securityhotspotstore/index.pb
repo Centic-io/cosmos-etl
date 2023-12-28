@@ -15,18 +15,6 @@ M
 cosmosetl/database/mongodb.py,6/d/6ddf32e26d8042c4a4f1c36729a3e7ad20e42be6
 9
 	config.py,1/a/1a1b9769344cb239f2e540e1e6ee1efa2d3034ea
-Z
-*cosmosetl/jobs/exporters/memory_storage.py,5/7/57f012aa3a3b437ec3893cca86391172f84549f7
-Q
-!cosmosetl/utils/atomic_counter.py,a/4/a4e11d7c0f0aa21f55f07996f71b63bf78eb512e
-P
- cosmosetl/utils/boolean_utils.py,a/0/a048456d368169c44a9518a68087f36dc7ce5df5
-L
-cosmosetl/utils/csv_utils.py,3/d/3d638a4c134447fb5a8684734fd6a76dc77ed7cd
-L
-cosmosetl/utils/exporters.py,6/8/687365cfc2b1d95d2f7ab237c7ff67d173df2f62
-H
-cosmosetl/utils/utils.py,2/e/2e0852360b4bf532d900a0b58540d39bd98152f1
 B
 cosmosetl/utils.py,5/4/542eb64b89f44e88f7ac7eedaa689b277931ebcb
 G
@@ -37,8 +25,6 @@ a
 1cosmosetl/streaming/streaming_exporter_creator.py,7/b/7b3f07adf1f261da4c0bfad6015e555f697b3a5e
 J
 cosmosetl/logging_utils.py,5/6/56895412893e283cbed3c66f5250fa1d300a2016
-_
-/cosmosetl/streaming/mongo_streaming_exporter.py,7/8/7871471374af9100e65f26e8777c1f484cea33de
 [
 +cosmosetl/streaming/eth_streamer_adapter.py,6/b/6bda60823784bea4b0d4cbeddeb3312236564340
 `
