@@ -62,3 +62,22 @@ def write_monitor_logs(stream_name, synced_block, chain_id):
     g.labels(stream_name, chain_id).inc(synced_block)
     _file = monitor_path + stream_name + '.prom'
     write_to_textfile(_file, registry)
+
+
+def write_last_time_running_logs(stream_name, timestamp, threshold=3600):
+    """
+    The write_last_time_running_logs function is used to write the last time a stream was run.
+    Args:
+        stream_name: Identify the stream
+        timestamp: Store the last time the process was run
+        threshold:
+
+    Returns:
+        Write Prometheus File Log
+    """
+    monitor_path = MonitoringConfig.MONITOR_ROOT_PATH
+    registry = CollectorRegistry()
+    g = Gauge('last_time_run', 'Last time run', ['process', 'threshold'], registry=registry)
+    g.labels(stream_name, threshold).inc(timestamp)
+    _file = monitor_path + 'last_' + stream_name + '.prom'
+    write_to_textfile(_file, registry)

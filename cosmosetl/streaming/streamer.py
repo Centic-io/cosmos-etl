@@ -28,7 +28,7 @@ import time
 from cosmosetl.file_utils import smart_open
 from cosmosetl.streaming.streamer_adapter_stub import StreamerAdapterStub
 from cosmosetl.streaming.streaming_exporter_creator import create_streaming_exporter
-from cosmosetl.logging_utils import write_monitor_logs
+from cosmosetl.logging_utils import write_monitor_logs, write_last_time_running_logs
 
 
 class Streamer:
@@ -93,7 +93,6 @@ class Streamer:
     def _do_stream(self):
         while self.end_block is None or self.last_synced_block < self.end_block:
             synced_blocks = 0
-
             try:
                 synced_blocks = self._sync_cycle()
             except Exception as e:
@@ -105,6 +104,9 @@ class Streamer:
             if synced_blocks <= 0:
                 logging.info('Nothing to sync. Sleeping for {} seconds...'.format(self.period_seconds))
                 time.sleep(self.period_seconds)
+            elif self.monitor:
+                write_last_time_running_logs(
+                    f"{self.chain_id}_{self.stream_id}", int(time.time()), threshold=600)
 
     def _sync_cycle(self):
         current_block = self.blockchain_streamer_adapter.get_current_block_number()
@@ -118,9 +120,6 @@ class Streamer:
             self.blockchain_streamer_adapter.export_all(self.last_synced_block + 1, target_block)
             logging.info('Writing last synced block {}'.format(target_block))
             write_last_synced_block(self.last_synced_block_file, target_block)
-            if self.monitor:
-                write_monitor_logs(f"{self.chain_id}_{self.stream_id}", target_block, self.chain_id)
-
             if self.exporter:
                 self.exporter.update_latest_updated_at(self.stream_id, target_block)
             self.last_synced_block = target_block
@@ -150,7 +149,7 @@ def init_last_synced_block_file(start_block, last_synced_block_file):
         raise ValueError(
             '{} should not exist if --start-block option is specified. '
             'Either remove the {} file or the --start-block option.'
-                .format(last_synced_block_file, last_synced_block_file))
+            .format(last_synced_block_file, last_synced_block_file))
     write_last_synced_block(last_synced_block_file, start_block)
 
 
