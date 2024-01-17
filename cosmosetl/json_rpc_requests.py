@@ -21,11 +21,14 @@ def generate_get_block_by_number_json_rpc(block_numbers):
 
 def generate_tx_search_by_height_json_rpc(heights, page=1, per_page=MAX_PER_PAGE):
     for idx, height in enumerate(heights):
-        yield generate_json_rpc(
-            method='tx_search',
-            params=["tx.height=%d" % height, True, str(page), str(per_page), "asc", True],
-            request_id=idx
-        )
+        try:
+            yield generate_json_rpc(
+                method='tx_search',
+                params=["tx.height=%d" % height, True, str(page), str(per_page), "asc", True],
+                request_id=idx
+            )
+        except Exception as e:
+            raise e
 
 def generate_get_latest_block_json_rpc():
     return {

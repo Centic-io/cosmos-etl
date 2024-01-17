@@ -39,11 +39,11 @@ class ExportTransactionsJob(BaseJob):
 
         for block in results:
             self._export_block(block)
-            if int(block.get('total_count', 0)) > page * MAX_PER_PAGE:
-                next_block_number_batch.append(block)
-
-        if next_block_number_batch:
-            self._export_batch(next_block_number_batch, page + 1)
+        #     if int(block.get('total_count', 0)) > page * MAX_PER_PAGE:
+        #         next_block_number_batch.append(block)
+        #
+        # if next_block_number_batch:
+        #     self._export_batch(next_block_number_batch, page + 1)
 
     def _export_block(self, block):
         for tx in block.get('txs', []):
