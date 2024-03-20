@@ -24,7 +24,8 @@ def generate_tx_search_by_height_json_rpc(heights, page=1, per_page=MAX_PER_PAGE
         try:
             yield generate_json_rpc(
                 method='tx_search',
-                params=["tx.height=%d" % height, True, str(page), str(per_page), "asc", True],
+                # params=["tx.height=%d" % height, True, str(page), str(per_page), "asc", True],
+                params=["tx.height=%d" % height, True, str(page), str(per_page), "asc"],
                 request_id=idx
             )
         except Exception as e:
