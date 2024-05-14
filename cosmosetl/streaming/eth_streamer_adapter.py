@@ -25,8 +25,10 @@ class EthStreamerAdapter:
             max_workers=5,
             entity_types=tuple(EntityType.ALL_FOR_STREAMING),
             stream_id='default-collector',
-            stream_name='streaming_collector'
+            stream_name='streaming_collector',
+            chain_id='cosmos'
     ):
+        self.chain_id = chain_id
         self.batch_web3_provider = batch_web3_provider
         self.w3 = Web3(batch_web3_provider)
         self.w3.middleware_onion.inject(geth_poa_middleware, layer=0)
@@ -75,6 +77,7 @@ class EthStreamerAdapter:
             batch_web3_provider=self.batch_web3_provider,
             max_workers=self.max_workers,
             item_exporter=blocks_and_transactions_item_exporter,
+
         )
         blocks_and_transactions_job.run()
         blocks = blocks_and_transactions_item_exporter.get_items('block')
@@ -90,7 +93,8 @@ class EthStreamerAdapter:
             max_workers=self.max_workers,
             item_exporter=blocks_and_transactions_item_exporter,
             export_transactions=EntityType.TRANSACTION in self.entity_types,
-            export_events=EntityType.LOG in self.entity_types
+            export_events=EntityType.LOG in self.entity_types,
+            chain_id=self.chain_id
         )
         blocks_and_transactions_job.run()
         transactions = blocks_and_transactions_item_exporter.get_items('transaction')

@@ -94,7 +94,8 @@ def stream(last_synced_block_file, lag, provider_uri, output, db_prefix, add_wal
         max_workers=max_workers,
         entity_types=entity_types,
         stream_id=stream_id,
-        stream_name=stream_name
+        stream_name=stream_name,
+        chain_id=chain_id
     )
     streamer = Streamer(
         blockchain_streamer_adapter=streamer_adapter,
