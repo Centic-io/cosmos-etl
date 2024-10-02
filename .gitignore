@@ -31,3 +31,7 @@ wheels/
 .env
 .data
 .idea
+tests
+test/
+.tests/
+.test/

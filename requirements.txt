@@ -12,3 +12,4 @@ pyetherchain==0.3.2
 QueryStateLib==1.1.4
 prometheus-client
 python-dotenv
+blockchain-etl-common==1.7.1

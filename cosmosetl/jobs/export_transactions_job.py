@@ -44,7 +44,7 @@ class ExportTransactionsJob(BaseJob):
         )
 
     def _export_batch(self, block_number_batch, page=1):
-        if self.chain_id == "cosmos":
+        if "cosmos" in self.chain_id:
             requests = list(generate_cosmos_tx_search_by_height_json_rpc(block_number_batch, page))
         else:
             requests = list(generate_tx_search_by_height_json_rpc(block_number_batch, page))
