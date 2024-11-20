@@ -44,10 +44,10 @@ class ExportTransactionsJob(BaseJob):
         )
 
     def _export_batch(self, block_number_batch, page=1):
-        if "cosmos" in self.chain_id:
-            requests = list(generate_cosmos_tx_search_by_height_json_rpc(block_number_batch, page))
-        else:
-            requests = list(generate_tx_search_by_height_json_rpc(block_number_batch, page))
+        # if "cosmos" in self.chain_id:
+        requests = list(generate_cosmos_tx_search_by_height_json_rpc(block_number_batch, page))
+        # else:
+        #     requests = list(generate_tx_search_by_height_json_rpc(block_number_batch, page))
         response = self.batch_web3_provider.make_batch_request(json.dumps(requests))
         results = rpc_response_batch_to_results(response)
         # next_block_number_batch = []
