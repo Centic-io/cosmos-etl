@@ -91,6 +91,11 @@ class MongodbItemExporter(object):
         filter_ = {"_id": stream_id}
         return self.mongo_collectors.find_one(filter_)
 
+    def get_transactions_by_id(self, ids):
+        filter_ = {"_id": {"$in": ids}}
+        cursors = self.mongo_transactions.find(filter=filter_)
+        return cursors
+
     def upsert_blocks(self, logs):
         operations = []
         for update_info in logs:
