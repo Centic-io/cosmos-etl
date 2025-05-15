@@ -3,6 +3,7 @@ import logging
 
 from blockchainetl_common.jobs.exporters.console_item_exporter import ConsoleItemExporter
 from blockchainetl_common.jobs.exporters.in_memory_item_exporter import InMemoryItemExporter
+from pymongo.errors import BulkWriteError
 from web3 import Web3
 from web3.middleware import geth_poa_middleware
 
@@ -19,7 +20,7 @@ class EthStreamerAdapter:
     def __init__(
             self,
             batch_web3_provider,
-            item_exporter=ConsoleItemExporter(),
+            item_exporter,
             batch_size=100,
             block_batch_size=96,
             max_workers=5,
@@ -64,9 +65,40 @@ class EthStreamerAdapter:
         if self._should_export(EntityType.TRANSACTION):
             transactions, events = self._export_transactions(start_block, end_block)
 
-        self.item_exporter.upsert_transactions(transactions)
         self.item_exporter.upsert_blocks(blocks)
         self.item_exporter.upsert_logs(events)
+        try:
+            if transactions:
+                self.item_exporter.upsert_transactions(transactions)
+
+        except BulkWriteError as bwe:
+            duplicate_key = False
+            for error in bwe.details['writeErrors']:
+                if error['code'] == 11000:  # 11000 is the error code for DuplicateKeyError
+                    self.check_duplicate_key_transactions(transactions)
+                    duplicate_key = True
+            if duplicate_key:
+                pass
+            else:
+                raise bwe
+
+    def check_duplicate_key_transactions(self, transactions):
+        tx_ids = []
+        tx_dict = {}
+        for transaction in transactions:
+            tx_ids.append(transaction.get("_id"))
+            tx_dict[transaction.get("_id")] = transaction
+
+        for idx in range(0, len(tx_ids), 1000):
+            result = []
+            cursor = self.item_exporter.get_transactions_by_id(tx_ids[idx:idx + 1000])
+            for transaction in cursor:
+                _id = transaction.get("_id")
+                transaction.update(tx_dict.get(_id))
+                result.append(transaction)
+
+            self.item_exporter.delete_many_txs_by_id(tx_ids[idx:idx + 1000])
+            self.item_exporter.upsert_transactions(result)
 
     def _export_blocks(self, start_block, end_block):
         blocks_and_transactions_item_exporter = InMemoryItemExporter(item_types=['block'])
