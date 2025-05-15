@@ -96,6 +96,10 @@ class MongodbItemExporter(object):
         cursors = self.mongo_transactions.find(filter=filter_)
         return cursors
 
+    def delete_many_txs_by_id(self, ids):
+        filter_ = {"_id": {"$in": ids}}
+        self.mongo_transactions.delete_many(filter_)
+
     def upsert_blocks(self, logs):
         operations = []
         for update_info in logs:
